@@ -10,7 +10,8 @@
 <ul class="tasks">
     @foreach (client.Models.Task item in AllTasks)
     {
-        <li class="tasks__item">
+        string taskId = $"{item.id}-task-id";
+        <li id="@taskId" class="tasks__item">
             <label id="@item.id" onclick="isCompleteRequest('@editRequest.editTask(item.id, "isComplete")')">
                 <p>@item.title</p>
                 <p>@item.descr</p>
