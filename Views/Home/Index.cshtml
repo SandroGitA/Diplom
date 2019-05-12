@@ -1,6 +1,5 @@
 ﻿@model client.Models.Task
 @{
-    @*ViewData["Title"] = "Органайзер";*@
     Tasks tasks = new Tasks();
     tasks.UpdateTasks();
     var AllTasks = tasks.GetTasks();
