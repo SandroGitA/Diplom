@@ -8,18 +8,14 @@ namespace client.Models
 {
     public class EditRequest
     {
-        public string editTask(object id, object propertyName)
+        public string ChangeCompleteTask(object id, object isComplete)
         {
             EditTask editTask = new EditTask();
             editTask.id = id;
-            editTask.propName = propertyName;
-            editTask.value = true;
-            if (editTask.value == null)
-                editTask.value = true;
-            if ((bool)editTask.value == true)
+            editTask.propName = "isComplete";
+            if ((bool)isComplete)
                 editTask.value = false;
-            if ((bool)editTask.value == false)
-                editTask.value = true;
+            else editTask.value = true;
             return JsonConvert.SerializeObject(editTask);
         }
     }

@@ -7,7 +7,13 @@ function isCompleteRequest(editTask) {
     var x = new XMLHttpRequest();
     x.open("POST", "http://37.143.15.111:800/values/edit" + "?jsonstring=" + editTask);
     x.onload = function () {
-        console.log(x.responseText);
+        var editTaskId = JSON.parse(editTask).id;
+        renderIsCompleteTaskChange(editTaskId);
     }
     x.send();
+}
+
+function renderIsCompleteTaskChange(idTask) {
+    var taskItemLi = document.querySelector(`#task-id-${idTask}`);
+    taskItemLi.classList.toggle("tasks__item--complete");
 }
