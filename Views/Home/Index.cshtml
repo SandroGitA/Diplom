@@ -8,13 +8,14 @@
 
 <form id="add-task" class="add-task">
     <textarea placeholder="Добавить задачу"></textarea>
+    <button class="add-task__btn" type="submit">Добавить</button>
 </form>
 <div class="task-list">
     <ul class="tasks">
         @foreach (client.Models.Task item in AllTasks)
         {
             string taskId = $"task-id-{item.id}";
-            <li id="@taskId" class="tasks__item">
+            <li class="tasks__item" id="@taskId">
                 <label id="@item.id" onclick="isCompleteRequest('@editRequest.ChangeCompleteTask(item.id, item.isComplete)')">
                     <p>@item.title</p>
                     <p>@item.descr</p>
@@ -25,22 +26,3 @@
         }
     </ul>
 </div>
-
-@*<ul class="tasks">
-    @foreach (client.Models.Task item in AllTasks)
-    {
-        string taskId = $"task-id-{item.id}";
-        <li id="@taskId" class="tasks__item">
-            <label id="@item.id" onclick="isCompleteRequest('@editRequest.ChangeCompleteTask(item.id, item.isComplete)')">
-                <p>@item.title</p>
-                <p>@item.descr</p>
-                <p>@item.isComplete</p>
-                <p>@item.isPin</p>
-            </label>
-        </li>
-    }
-</ul>*@
-
-@*<p id="outputRequest">
-
-</p>*@
