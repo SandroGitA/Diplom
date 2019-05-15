@@ -14,15 +14,14 @@
     <ul class="task-list__ul">
         @foreach (client.Models.Task item in AllTasks)
         {
-            string taskId = $"task-id-{item.id}";
-            <li class="tasks__item" id="@taskId">
-                <label id="@item.id" onclick="isCompleteRequest('@editRequest.ChangeCompleteTask(item.id, item.isComplete)')">
+            <li class="tasks__item" id="task-id-@item.id">
+                <label id="@item.id" @*onclick="isCompleteRequest('@editRequest.ChangeCompleteTask(item.id, item.isComplete)')*@">
                     <p>@item.title</p>
                     <p>@item.descr</p>
                     <p>@item.isComplete</p>
                     <p>@item.isPin</p>
                 </label>
             </li>
-        }
-    </ul>
+            }
+        </ul>
 </div>

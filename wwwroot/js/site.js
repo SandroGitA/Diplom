@@ -3,6 +3,12 @@
 
 // Write your JavaScript code.
 
+const answerOutput = document.querySelector('#outputRequest');
+const addTaskForm = document.querySelector("#add-task");
+const labelId = document.querySelector("#task-id");
+
+labelId.addEventListener("click", isCompleteRequest(idTask));
+
 function isCompleteRequest(editTask) {
     var x = new XMLHttpRequest();
     x.open("POST", "http://37.143.15.111:800/values/edit" + "?jsonstring=" + editTask);
@@ -18,8 +24,9 @@ function renderIsCompleteTaskChange(idTask) {
     taskItemLi.classList.toggle("tasks__item--complete");
 }
 
-const answerOutput = document.querySelector('#outputRequest');
-const GetBtn = document.querySelector('#GETBtn');
+addTaskForm.addEventListener("submit", function () {
+    //post
+})
 
 const getJson = () => {
     const getJs = new XMLHttpRequest();
@@ -31,7 +38,7 @@ const getJson = () => {
             answerOutput.textContent = `Ошибка получения данных с сервера: ${getJs.status} ${getJs.statusText}`;
         }
     });
-    answerOutput.textContent = getJs.response;
+    //answerOutput.textContent = getJs.response;
     getJs.open('GET', "http://37.143.15.111:800/values/");
     getJs.send();
 }
