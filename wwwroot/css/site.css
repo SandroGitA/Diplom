@@ -2,10 +2,8 @@
     text-decoration: line-through;
 }
 
-body {
-    font-family: Arial,sans-serif;
-    font-size: 18px;
-    line-height: 24px;
+.tasks__item {
+    margin-bottom: 27px;
 }
 
 .task-list__ul {
@@ -14,8 +12,10 @@ body {
     margin: 0;
 }
 
-.tasks__item{
-    margin-bottom: 27px;
+body {
+    font-family: Arial,sans-serif;
+    font-size: 18px;
+    line-height: 24px;
 }
 
 .container {
@@ -34,4 +34,5 @@ body {
     padding: 6px 25px 6px 24px;
     width: 86%;
     height: 34px;
+    resize: none;
 }

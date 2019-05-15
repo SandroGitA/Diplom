@@ -65,7 +65,7 @@ using client.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(182, 194, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ed51fc1def6b4e718a324fba545a3cb2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3e9f98f1b15c488faa7d782f4870f7e8", async() => {
                 BeginContext(219, 150, true);
                 WriteLiteral("\r\n    <textarea class=\"add-task__input\" placeholder=\"Добавить задачу\"></textarea>\r\n    <button class=\"add-task__btn\" type=\"submit\">Добавить</button>\r\n");
                 EndContext();
