@@ -17,3 +17,23 @@ function renderIsCompleteTaskChange(idTask) {
     var taskItemLi = document.querySelector(`#task-id-${idTask}`);
     taskItemLi.classList.toggle("tasks__item--complete");
 }
+
+const answerOutput = document.querySelector('#outputRequest');
+const GetBtn = document.querySelector('#GETBtn');
+
+const getJson = () => {
+    const getJs = new XMLHttpRequest();
+    getJs.responseType = "text";
+    getJs.addEventListener('load', () => {
+        if (getJs.status >= 200 && getJs.status <= 210) {
+            answerOutput.textContent = getJs.response;
+        } else {
+            answerOutput.textContent = `Ошибка получения данных с сервера: ${getJs.status} ${getJs.statusText}`;
+        }
+    });
+    answerOutput.textContent = getJs.response;
+    getJs.open('GET', "http://37.143.15.111:800/values/");
+    getJs.send();
+}
+
+document.addEventListener('DOMContentLoaded', getJson);

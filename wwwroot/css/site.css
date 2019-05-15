@@ -1,3 +1,18 @@
 ﻿.tasks__item--complete {
     text-decoration: line-through;
 }
+
+body{
+    font-family: Arial,sans-serif;
+}
+
+ul{
+    list-style: none;
+}
+
+.container {
+    width: 87.5%;
+    max-width: 672px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
