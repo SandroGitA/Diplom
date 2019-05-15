@@ -7,11 +7,11 @@
 }
 
 <form id="add-task" class="add-task">
-    <textarea placeholder="Добавить задачу"></textarea>
+    <textarea class="add-task__input" placeholder="Добавить задачу"></textarea>
     <button class="add-task__btn" type="submit">Добавить</button>
 </form>
 <div class="task-list">
-    <ul class="tasks">
+    <ul class="task-list__ul">
         @foreach (client.Models.Task item in AllTasks)
         {
             string taskId = $"task-id-{item.id}";

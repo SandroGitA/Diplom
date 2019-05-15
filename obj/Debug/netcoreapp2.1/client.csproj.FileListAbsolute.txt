@@ -27,3 +27,4 @@ C:\Users\User\Documents\Visual Studio 2017\Projects\client\client\obj\Debug\netc
 C:\Users\User\Documents\Visual Studio 2017\Projects\client\client\obj\Debug\netcoreapp2.1\client.dll
 C:\Users\User\Documents\Visual Studio 2017\Projects\client\client\obj\Debug\netcoreapp2.1\client.pdb
 C:\Users\User\Documents\Visual Studio 2017\Projects\client\client\obj\Debug\netcoreapp2.1\client.csproj.CopyComplete
+C:\Users\User\Documents\Visual Studio 2017\Projects\client\client\obj\Debug\netcoreapp2.1\client.csprojAssemblyReference.cache
