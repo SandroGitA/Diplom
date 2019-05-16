@@ -20,7 +20,6 @@ function getHtmlElement(tagName, textContent, className) {
 
 function getTasks() {
     const xhr = new XMLHttpRequest();
-    
     const url = `${backendAddress}/values`;
 
     xhr.addEventListener("load", function () {
@@ -45,6 +44,7 @@ function renderAddTaskForm() {
 
     submitButton.addEventListener("click", (evt) => {
         evt.preventDefault();
+        clearTasks();
         addTask(inputText.value);
         inputText.value = "";
         //console.log();
@@ -114,6 +114,7 @@ function changeCompleteTask(propObj) {
 function addTask(input) {
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values`;
+
     const newTask = {
         id: new Date().getTime(),
         dateBind: new Date(),
@@ -129,7 +130,11 @@ function addTask(input) {
     getTasks();
 }
 
+function clearTasks() {
+    const tasksUl = document.querySelector(".tasks");
+    const container = document.querySelector(".container");
+    container.removeChild(tasksUl);
+}
+
 document.addEventListener('DOMContentLoaded', getTasks);
 renderAddTaskForm();
-
-//cleartasks
