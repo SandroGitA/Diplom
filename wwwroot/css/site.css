@@ -1,4 +1,4 @@
-﻿.tasks__item--complete {
+﻿/*.tasks__item--complete {
     text-decoration: line-through;
 }
 
@@ -35,4 +35,52 @@ body {
     width: 86%;
     height: 34px;
     resize: none;
+}*/
+
+body {
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    color: #404042;
+}
+
+.container {
+    width: 87.5%;
+    max-width: 672px;
+
+    margin: 0 auto;
+    padding: 0 20px;
+
+}
+
+.tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tasks__item {
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.tasks__item label {
+    cursor: pointer;
+}
+
+.tasks__item--done {
+    color: #969393;
+    text-decoration: line-through;
+}
+
+.tasks__item-title {
+    margin: 0;
+    font-size: 16px;
+}
+
+.tasks__item-descr {
+    margin: 0;
+
+    font-size: 14px;
+    color: #969393;
 }
