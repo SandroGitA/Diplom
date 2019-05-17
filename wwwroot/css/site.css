@@ -1,43 +1,4 @@
-﻿/*.tasks__item--complete {
-    text-decoration: line-through;
-}
-
-.tasks__item {
-    margin-bottom: 27px;
-}
-
-.task-list__ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    font-family: Arial,sans-serif;
-    font-size: 18px;
-    line-height: 24px;
-}
-
-.container {
-    width: 87.5%;
-    max-width: 672px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.add-task{
-    margin-bottom: 27px;
-}
-
-.add-task__input {
-    font-size: 16px;
-    padding: 6px 25px 6px 24px;
-    width: 86%;
-    height: 34px;
-    resize: none;
-}*/
-
-body {
+﻿body {
     font-family: "Open Sans", Arial, sans-serif;
     font-size: 14px;
     line-height: 24px;

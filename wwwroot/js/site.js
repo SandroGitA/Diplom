@@ -59,10 +59,25 @@ function renderTasks(tasks) {
     ulTasks.classList.add("tasks");
 
     tasks.forEach(item => {
-        console.log(item);
+        //console.log(item);
         const label = document.createElement("label");
         const li = getHtmlElement("li", null, "tasks__item");
         const title = getHtmlElement("p", item.title, "tasks__item-title");
+
+        const taskOption = getHtmlElement("div", null, "task-option");
+        const tasksOptionButton = getHtmlElement("button", "меню", "task-option-button");
+        const taskOptionList = getHtmlElement("ul", null, "task-option");
+        taskOptionList.classList.add("task-option--unshow");
+        taskOption.appendChild(tasksOptionButton);
+        taskOption.appendChild(taskOptionList);
+
+        tasksOptionButton.addEventListener("mouseenter", () => {
+            taskOptionList.classList.toggle("task-option--unshow");
+        })
+
+        tasksOptionButton.addEventListener("mouseleave", () => {
+            taskOptionList.classList.toggle("task-option--show");
+        })
 
         label.appendChild(title);
         //console.log(label);
@@ -85,6 +100,7 @@ function renderTasks(tasks) {
         }
 
         li.appendChild(label);
+        li.appendChild(taskOption);
         ulTasks.appendChild(li);
     });
     const container = document.querySelector(".container");
