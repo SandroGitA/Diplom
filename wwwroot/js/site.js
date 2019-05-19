@@ -131,6 +131,13 @@ function addTask(input) {
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values`;
 
+    if (input == "") {
+        input = null;
+        getTasks();
+        renderTasks();
+        return false;
+    }
+
     const newTask = {
         id: new Date().getTime(),
         dateBind: new Date(),
@@ -140,6 +147,7 @@ function addTask(input) {
         isPin: false,
         isComplete: false,
     };
+    
     const body = JSON.stringify(newTask);
     xhr.open("POST", url + "?jsonstring=" + body);
     xhr.send();
