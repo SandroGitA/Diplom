@@ -41,7 +41,10 @@
 
 .tasks__item-descr {
     margin: 0;
-
     font-size: 14px;
     color: #969393;
+}
+
+.tasks__item--pin{
+    font-size: 30px;
 }

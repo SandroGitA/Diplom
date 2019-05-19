@@ -47,7 +47,6 @@ function renderAddTaskForm() {
         clearTasks();
         addTask(inputText.value);
         inputText.value = "";
-        //console.log();
     })
 
     const container = document.querySelector(".container");
@@ -59,39 +58,54 @@ function renderTasks(tasks) {
     ulTasks.classList.add("tasks");
 
     tasks.forEach(item => {
-        //console.log(item);
         const label = document.createElement("label");
         const li = getHtmlElement("li", null, "tasks__item");
         const title = getHtmlElement("p", item.title, "tasks__item-title");
 
         const taskOption = getHtmlElement("div", null, "task-option");
-        const tasksOptionButton = getHtmlElement("button", "Меню", "task-option-button");
-        const taskOptionList = getHtmlElement("ul", null, "task-option");
-        //taskOptionList.classList.add("task-option--unshow");
-        //taskOption.appendChild(tasksOptionButton);
-       //taskOption.appendChild(taskOptionList);
+        const taskOptionButton = getHtmlElement("button", "Меню задачи", "task-option-button");
+        const taskOptionListUl = getHtmlElement("ul", null, "task-option-list-ul");
 
-        /*tasksOptionButton.addEventListener("mouseenter", () => {
-            taskOptionList.classList.toggle("task-option--unshow");
+        const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", null);
+        const taskOptionEditBtn = getHtmlElement("button", "Редактировать", null);
+        const taskOptionPinBtn = getHtmlElement("button", "Закрепить", null); 
+
+        const taskOptionListLiDelete = getHtmlElement("li", null, "task-option-list-li");
+        taskOptionListLiDelete.appendChild(taskOptionDeleteBtn);
+
+        const taskOptionListLiEdit = getHtmlElement("li", null, "task-option-list-li");
+        taskOptionListLiEdit.appendChild(taskOptionEditBtn);
+
+        const taskOptionListLiPin = getHtmlElement("li", null, "task-option-list-li");
+        taskOptionListLiPin.appendChild(taskOptionPinBtn);
+
+        taskOptionListUl.appendChild(taskOptionListLiDelete);
+        taskOptionListUl.appendChild(taskOptionListLiEdit);
+        taskOptionListUl.appendChild(taskOptionListLiPin);
+
+        taskOptionButton.addEventListener("mouseenter", () => {
+
         })
 
-        tasksOptionButton.addEventListener("mouseleave", () => {
-            taskOptionList.classList.toggle("task-option--show");
-        })*/
+        taskOption.appendChild(taskOptionButton);
+        taskOption.appendChild(taskOptionListUl);
 
-        const tasksOptionDeleteBtn = getHtmlElement("button", "Удалить", "task-option--delete");
-
-        tasksOptionDeleteBtn.addEventListener("click", () => {
+        taskOptionDeleteBtn.addEventListener("click", () => {
             const deleteObj = { id: item.id };
             clearTasks();
             deleteTask(deleteObj);
-            //renderTasks();
         });
 
-        taskOption.appendChild(tasksOptionDeleteBtn);
+        taskOptionEditBtn.addEventListener("click", () => {
+            //func редактирования
+        })
+
+        taskOptionPinBtn.addEventListener("click", () => {
+            const pinObj = { id: item.id, propName: "isPin", value: !item.isPin };
+            changePinTask(pinObj);
+        })
 
         label.appendChild(title);
-        //console.log(label);
         li.id = `task-item-${item.id}`;
 
         label.addEventListener("click", () => {
@@ -108,6 +122,10 @@ function renderTasks(tasks) {
 
         if (item.isComplete) {
             li.classList.add("tasks__item--done");
+        }
+
+        if (item.isPin) {
+            li.classList.add("tasks__item--pin");
         }
 
         li.appendChild(label);
@@ -127,8 +145,25 @@ function deleteTask(deleteObj) {
     getTasks();
 }
 
+function changePinTask(pinObj) {
+    const xhr = new XMLHttpRequest();
+    const url = `${backendAddress}/values/edit`;
+    const body = JSON.stringify(pinObj);
+
+    xhr.addEventListener("load", () => {
+        if (xhr.status >= 200 & xhr.status <= 210) {
+            const li = document.querySelector(`#task-item-${pinObj.id}`);
+            li.classList.toggle("tasks__item--pin");
+        } else {
+            console.error("error");
+        }
+    })
+
+    xhr.open("POST", url + "?jsonstring=" + body);
+    xhr.send();
+}
+
 function changeCompleteTask(propObj) {
-    //console.log(propObj);
 
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values/edit`;
