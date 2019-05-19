@@ -84,7 +84,12 @@ function renderTasks(tasks) {
         taskOptionListUl.appendChild(taskOptionListLiPin);
 
         taskOptionButton.addEventListener("mouseenter", () => {
-
+            taskOptionListUl.classList.add("task-option--show"); 
+            taskOptionListUl.classList.remove("task-option--unshow");
+        })
+        taskOptionButton.addEventListener("mouseleave", () => {
+            taskOptionListUl.classList.toggle("task-option--unshow");
+            taskOptionListUl.classList.remove("task-option--show");
         })
 
         taskOption.appendChild(taskOptionButton);
