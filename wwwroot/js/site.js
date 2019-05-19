@@ -65,19 +65,30 @@ function renderTasks(tasks) {
         const title = getHtmlElement("p", item.title, "tasks__item-title");
 
         const taskOption = getHtmlElement("div", null, "task-option");
-        const tasksOptionButton = getHtmlElement("button", "меню", "task-option-button");
+        const tasksOptionButton = getHtmlElement("button", "Меню", "task-option-button");
         const taskOptionList = getHtmlElement("ul", null, "task-option");
-        taskOptionList.classList.add("task-option--unshow");
-        taskOption.appendChild(tasksOptionButton);
-        taskOption.appendChild(taskOptionList);
+        //taskOptionList.classList.add("task-option--unshow");
+        //taskOption.appendChild(tasksOptionButton);
+       //taskOption.appendChild(taskOptionList);
 
-        tasksOptionButton.addEventListener("mouseenter", () => {
+        /*tasksOptionButton.addEventListener("mouseenter", () => {
             taskOptionList.classList.toggle("task-option--unshow");
         })
 
         tasksOptionButton.addEventListener("mouseleave", () => {
             taskOptionList.classList.toggle("task-option--show");
-        })
+        })*/
+
+        const tasksOptionDeleteBtn = getHtmlElement("button", "Удалить", "task-option--delete");
+
+        tasksOptionDeleteBtn.addEventListener("click", () => {
+            const deleteObj = { id: item.id };
+            clearTasks();
+            deleteTask(deleteObj);
+            //renderTasks();
+        });
+
+        taskOption.appendChild(tasksOptionDeleteBtn);
 
         label.appendChild(title);
         //console.log(label);
@@ -106,6 +117,15 @@ function renderTasks(tasks) {
     const container = document.querySelector(".container");
     container.appendChild(ulTasks);
 };
+
+function deleteTask(deleteObj) {
+    const xhr = new XMLHttpRequest();
+    const url = `${backendAddress}/values/delete`;
+    const body = JSON.stringify(deleteObj);
+    xhr.open("POST", url + "?jsonstring=" + body);
+    xhr.send();
+    getTasks();
+}
 
 function changeCompleteTask(propObj) {
     //console.log(propObj);
