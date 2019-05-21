@@ -68,7 +68,11 @@ function renderTasks(tasks) {
 
         const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", null);
         const taskOptionEditBtn = getHtmlElement("button", "Редактировать", null);
-        const taskOptionPinBtn = getHtmlElement("button", "Закрепить", null); 
+        const taskOptionPinBtn = getHtmlElement("button", "Закрепить", null);
+
+        const editingForm = getHtmlElement("form", null, "editing-form");
+        const editingFormInput = getHtmlElement("input", null, "editing-form-input");
+        editingForm.appendChild(editingFormInput);       
 
         const taskOptionListLiDelete = getHtmlElement("li", null, "task-option-list-li");
         taskOptionListLiDelete.appendChild(taskOptionDeleteBtn);
@@ -102,6 +106,8 @@ function renderTasks(tasks) {
         });
 
         taskOptionEditBtn.addEventListener("click", () => {
+            // editingForm = getHtmlElement("form", null, "editing-form");
+            li.appendChild(editingForm);
             //func редактирования
         })
 
