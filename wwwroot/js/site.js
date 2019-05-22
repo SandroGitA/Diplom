@@ -72,7 +72,10 @@ function renderTasks(tasks) {
 
         const editingForm = getHtmlElement("form", null, "editing-form");
         const editingFormInput = getHtmlElement("input", null, "editing-form-input");
-        editingForm.appendChild(editingFormInput);       
+        const editignFormBtn = getHtmlElement("button", "Редактировать", "editing-form-input-submit");
+
+        editingForm.appendChild(editingFormInput);
+        editingForm.appendChild(editignFormBtn);
 
         const taskOptionListLiDelete = getHtmlElement("li", null, "task-option-list-li");
         taskOptionListLiDelete.appendChild(taskOptionDeleteBtn);
@@ -86,6 +89,14 @@ function renderTasks(tasks) {
         taskOptionListUl.appendChild(taskOptionListLiDelete);
         taskOptionListUl.appendChild(taskOptionListLiEdit);
         taskOptionListUl.appendChild(taskOptionListLiPin);
+
+        editignFormBtn.addEventListener("click", (evt) => {
+            const editDescr = { id: item.id, propName: "descr", value: editingFormInput.value };
+            evt.preventDefault();
+            clearTasks();
+            editTaskDescr(editDescr);
+            editingFormInput.value = "";
+        })
 
         taskOptionButton.addEventListener("mouseenter", () => {
             taskOptionListUl.classList.add("task-option--show"); 
@@ -106,9 +117,7 @@ function renderTasks(tasks) {
         });
 
         taskOptionEditBtn.addEventListener("click", () => {
-            // editingForm = getHtmlElement("form", null, "editing-form");
             li.appendChild(editingForm);
-            //func редактирования
         })
 
         taskOptionPinBtn.addEventListener("click", () => {
@@ -146,6 +155,24 @@ function renderTasks(tasks) {
     const container = document.querySelector(".container");
     container.appendChild(ulTasks);
 };
+
+function editTaskDescr(input) {
+    const xhr = new XMLHttpRequest();
+    const url = `${backendAddress}/values/edit`;
+    const body = JSON.stringify(input);
+
+    xhr.addEventListener("load", () => {
+        if (xhr.status >= 200 & xhr.status <= 210) {
+            const li = document.querySelector(`#task-item-${input.id}`);
+            li.classList.toggle("tasks__item--editing");
+        } else {
+            console.error("error");
+        }
+    })
+
+    xhr.open("POST", url + "?jsonstring=" + body);
+    xhr.send();
+}
 
 function deleteTask(deleteObj) {
     const xhr = new XMLHttpRequest();

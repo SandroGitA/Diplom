@@ -5,23 +5,3 @@
     var AllTasks = tasks.GetTasks();
     EditRequest editRequest = new EditRequest();
 }
-
-@*<form id="add-task" class="add-task">
-    <textarea class="add-task__input" name="add" form="add-task" placeholder="Добавить задачу"></textarea>
-    <button class="add-task__btn" type="submit">Добавить</button>
-</form>*@
-@*<div class="task-list">
-    <ul class="task-list__ul">
-        @foreach (client.Models.Task item in AllTasks)
-        {
-            <li class="tasks__item" id="task-id-@item.id">
-                <label id="@item.id" onclick="isCompleteRequest('@editRequest.ChangeCompleteTask(item.id, item.isComplete)')">
-                    <p>@item.title</p>
-                    <p>@item.descr</p>
-                    <p>@item.isComplete</p>
-                    <p>@item.isPin</p>
-                </label>
-            </li>
-            }
-        </ul>
-</div>*@
