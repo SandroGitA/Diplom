@@ -72,7 +72,7 @@ function renderTasks(tasks) {
 
         const editingForm = getHtmlElement("form", null, "editing-form");
         const editingFormInput = getHtmlElement("input", null, "editing-form-input");
-        const editignFormBtn = getHtmlElement("button", "Редактировать", "editing-form-input-submit");
+        const editignFormBtn = getHtmlElement("button", "Редактировать описание", "editing-form-input-submit");
 
         editingForm.appendChild(editingFormInput);
         editingForm.appendChild(editignFormBtn);
@@ -172,6 +172,7 @@ function editTaskDescr(input) {
 
     xhr.open("POST", url + "?jsonstring=" + body);
     xhr.send();
+    getTasks();
 }
 
 function deleteTask(deleteObj) {
