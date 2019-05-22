@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 const backendAddress = "http://37.143.15.111:800";
+const currentDate = new Date(); // DATE NOT DATA
 
 function getHtmlElement(tagName, textContent, className) {
     const element = document.createElement(tagName);
@@ -18,6 +19,32 @@ function getHtmlElement(tagName, textContent, className) {
     return element;
 };
 
+const btnNext = getHtmlElement("button", "Вперед", null);
+const btnPrev = getHtmlElement("button", "Назад", null);
+let myDate = new Date();
+
+btnNext.addEventListener("click", () => {
+    const year = myDate.getYear();
+    const month = myDate.getMonth();
+    const day = myDate.getDate() + 1;
+
+    myDate = new Date(year, month, day);
+    console.log(myDate.getDate());
+});
+
+btnPrev.addEventListener("click", () => {
+    const year = myDate.getYear();
+    const month = myDate.getMonth();
+    const day = myDate.getDate() - 1;
+
+    myDate = new Date(year, month, day);
+    console.log(myDate.getDate());
+});
+
+const container = document.querySelector(".container");
+container.appendChild(btnNext);
+container.appendChild(btnPrev);
+
 function getTasks() {
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values`;
@@ -25,7 +52,7 @@ function getTasks() {
     xhr.addEventListener("load", function () {
         if (xhr.status >= 200 && xhr.status <= 210) {
             const tasks = JSON.parse(xhr.response);
-            renderTasks(tasks);
+            renderTasks(tasks, currentDate);
         } else {
             console.error(`Получить данные с ${url} не удалось`);
         }
@@ -44,8 +71,12 @@ function renderAddTaskForm() {
 
     submitButton.addEventListener("click", (evt) => {
         evt.preventDefault();
-        clearTasks();
-        addTask(inputText.value);
+
+        if (inputText.value.trim()) {
+            clearTasks();
+            addTask(inputText.value);
+        }
+
         inputText.value = "";
     })
 
@@ -53,105 +84,123 @@ function renderAddTaskForm() {
     container.appendChild(elementFormAdd);
 }
 
-function renderTasks(tasks) {
+function renderTasks(tasks, renderDate) {
     const ulTasks = document.createElement("ul");
-    ulTasks.classList.add("tasks");
+    ulTasks.classList.add("tasks"); 
 
     tasks.forEach(item => {
-        const label = document.createElement("label");
-        const li = getHtmlElement("li", null, "tasks__item");
-        const title = getHtmlElement("p", item.title, "tasks__item-title");
 
-        const taskOption = getHtmlElement("div", null, "task-option");
-        const taskOptionButton = getHtmlElement("button", "Меню задачи", "task-option-button");
-        const taskOptionListUl = getHtmlElement("ul", null, "task-option-list-ul");
+        const dayTask = renderDate.getDate();
+        const dayNow = new Date(item.dateBind).getDate();
 
-        const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", null);
-        const taskOptionEditBtn = getHtmlElement("button", "Редактировать", null);
-        const taskOptionPinBtn = getHtmlElement("button", "Закрепить", null);
+        const monthTask = renderDate.getMonth();
+        const monthNow = new Date(item.dateBind).getMonth();
 
-        const editingForm = getHtmlElement("form", null, "editing-form");
-        const editingFormInput = getHtmlElement("input", null, "editing-form-input");
-        const editignFormBtn = getHtmlElement("button", "Редактировать описание", "editing-form-input-submit");
+        const yearTask = renderDate.getYear();
+        const yearNow = new Date(item.dateBind).getYear();
 
-        editingForm.appendChild(editingFormInput);
-        editingForm.appendChild(editignFormBtn);
+        const isValidDate = dayTask == dayNow && monthTask == monthNow && yearTask == yearNow;
 
-        const taskOptionListLiDelete = getHtmlElement("li", null, "task-option-list-li");
-        taskOptionListLiDelete.appendChild(taskOptionDeleteBtn);
+        if (isValidDate) {
 
-        const taskOptionListLiEdit = getHtmlElement("li", null, "task-option-list-li");
-        taskOptionListLiEdit.appendChild(taskOptionEditBtn);
+            const label = document.createElement("label");
+            const li = getHtmlElement("li", null, "tasks__item");
+            const title = getHtmlElement("p", item.title, "tasks__item-title");
 
-        const taskOptionListLiPin = getHtmlElement("li", null, "task-option-list-li");
-        taskOptionListLiPin.appendChild(taskOptionPinBtn);
+            const taskOption = getHtmlElement("div", null, "task-option");
+            const taskOptionButton = getHtmlElement("button", "Меню задачи", "task-option-button");
+            const taskOptionListUl = getHtmlElement("ul", null, "task-option-list-ul");
 
-        taskOptionListUl.appendChild(taskOptionListLiDelete);
-        taskOptionListUl.appendChild(taskOptionListLiEdit);
-        taskOptionListUl.appendChild(taskOptionListLiPin);
+            const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", null);
+            const taskOptionEditBtn = getHtmlElement("button", "Редактировать", null);
+            const taskOptionPinBtn = getHtmlElement("button", "Закрепить", null);
 
-        editignFormBtn.addEventListener("click", (evt) => {
-            const editDescr = { id: item.id, propName: "descr", value: editingFormInput.value };
-            evt.preventDefault();
-            clearTasks();
-            editTaskDescr(editDescr);
-            editingFormInput.value = "";
-        })
+            const editingForm = getHtmlElement("form", null, "editing-form");
+            const editingFormInput = getHtmlElement("input", null, "editing-form-input");
+            const editignFormBtn = getHtmlElement("button", "Редактировать описание", "editing-form-input-submit");
 
-        taskOptionButton.addEventListener("mouseenter", () => {
-            taskOptionListUl.classList.add("task-option--show"); 
-            taskOptionListUl.classList.remove("task-option--unshow");
-        })
-        taskOptionButton.addEventListener("mouseleave", () => {
-            taskOptionListUl.classList.toggle("task-option--unshow");
-            taskOptionListUl.classList.remove("task-option--show");
-        })
+            editingForm.appendChild(editingFormInput);
+            editingForm.appendChild(editignFormBtn);
 
-        taskOption.appendChild(taskOptionButton);
-        taskOption.appendChild(taskOptionListUl);
+            const taskOptionListLiDelete = getHtmlElement("li", null, "task-option-list-li");
+            taskOptionListLiDelete.appendChild(taskOptionDeleteBtn);
 
-        taskOptionDeleteBtn.addEventListener("click", () => {
-            const deleteObj = { id: item.id };
-            clearTasks();
-            deleteTask(deleteObj);
-        });
+            const taskOptionListLiEdit = getHtmlElement("li", null, "task-option-list-li");
+            taskOptionListLiEdit.appendChild(taskOptionEditBtn);
 
-        taskOptionEditBtn.addEventListener("click", () => {
-            li.appendChild(editingForm);
-        })
+            const taskOptionListLiPin = getHtmlElement("li", null, "task-option-list-li");
+            taskOptionListLiPin.appendChild(taskOptionPinBtn);
 
-        taskOptionPinBtn.addEventListener("click", () => {
-            const pinObj = { id: item.id, propName: "isPin", value: !item.isPin };
-            changePinTask(pinObj);
-        })
+            taskOptionListUl.appendChild(taskOptionListLiDelete);
+            taskOptionListUl.appendChild(taskOptionListLiEdit);
+            taskOptionListUl.appendChild(taskOptionListLiPin);
 
-        label.appendChild(title);
-        li.id = `task-item-${item.id}`;
+            editignFormBtn.addEventListener("click", (evt) => {
+                const editDescr = { id: item.id, propName: "descr", value: editingFormInput.value };
+                evt.preventDefault();
+                clearTasks();
+                editTaskDescr(editDescr);
+                editingFormInput.value = "";
+            })
 
-        label.addEventListener("click", () => {
-            const propObj = { id: item.id, propName: "isComplete", value: !item.isComplete };
-            changeCompleteTask(propObj);
-        });
+            taskOptionButton.addEventListener("mouseenter", () => {
+                taskOptionListUl.classList.add("task-option--show");
+                taskOptionListUl.classList.remove("task-option--unshow");
+            })
+            taskOptionButton.addEventListener("mouseleave", () => {
+                taskOptionListUl.classList.toggle("task-option--unshow");
+                taskOptionListUl.classList.remove("task-option--show");
+            })
 
-        const isDescrEmpty = !item.descr.length;
- 
-        if (!isDescrEmpty) {
-            const descr = getHtmlElement("p", item.descr, "tasks__item-descr");
-            label.appendChild(descr);
+            taskOption.appendChild(taskOptionButton);
+            taskOption.appendChild(taskOptionListUl);
+
+            taskOptionDeleteBtn.addEventListener("click", () => {
+                const deleteObj = { id: item.id };
+                clearTasks();
+                deleteTask(deleteObj);
+            });
+
+            taskOptionEditBtn.addEventListener("click", () => {
+                li.appendChild(editingForm);
+            })
+
+            taskOptionPinBtn.addEventListener("click", () => {
+                const pinObj = { id: item.id, propName: "isPin", value: !item.isPin };
+                changePinTask(pinObj);
+            })
+
+            label.appendChild(title);
+            li.id = `task-item-${item.id}`;
+
+            label.addEventListener("click", () => {
+                const propObj = { id: item.id, propName: "isComplete", value: !item.isComplete };
+                changeCompleteTask(propObj);
+            });
+
+            const isDescrEmpty = !item.descr.length;
+
+            if (!isDescrEmpty) {
+                const descr = getHtmlElement("p", item.descr, "tasks__item-descr");
+                label.appendChild(descr);
+            }
+
+            if (item.isComplete) {
+                li.classList.add("tasks__item--done");
+            }
+
+            if (item.isPin) {
+                li.classList.add("tasks__item--pin");
+            }
+
+            li.appendChild(label);
+            li.appendChild(taskOption);
+            ulTasks.appendChild(li);
+        } else {
+            const div = getHtmlElement("div", "Нет задач", "");
         }
-
-        if (item.isComplete) {
-            li.classList.add("tasks__item--done");
-        }
-
-        if (item.isPin) {
-            li.classList.add("tasks__item--pin");
-        }
-
-        li.appendChild(label);
-        li.appendChild(taskOption);
-        ulTasks.appendChild(li);
     });
+
     const container = document.querySelector(".container");
     container.appendChild(ulTasks);
 };
@@ -225,13 +274,6 @@ function addTask(input) {
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values`;
 
-    if (input == "") {
-        input = null;
-        getTasks();
-        renderTasks();
-        return false;
-    }
-
     const newTask = {
         id: new Date().getTime(),
         dateBind: new Date(),
@@ -241,7 +283,7 @@ function addTask(input) {
         isPin: false,
         isComplete: false,
     };
-    
+
     const body = JSON.stringify(newTask);
     xhr.open("POST", url + "?jsonstring=" + body);
     xhr.send();
@@ -254,5 +296,19 @@ function clearTasks() {
     container.removeChild(tasksUl);
 }
 
+function renderSliderDay() {//доделать
+
+    const divSliderDay = getHtmlElement("div", null, "slider-day");
+    const divSliderDayWrap = getHtmlElement("div", null, "slider-day-wrap");
+    const sliderDayInfo = getHtmlElement("div", null, "slider-day-wrap-info");
+
+    divSliderDayWrap.appendChild(sliderDayInfo);
+    divSliderDay.appendChild(divSliderDayWrap);
+
+    const container = document.querySelector(".container");
+    container.appendChild(divSliderDay);
+}
+
 document.addEventListener('DOMContentLoaded', getTasks);
+renderSliderDay();
 renderAddTaskForm();
