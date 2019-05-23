@@ -142,7 +142,13 @@ function renderTasks(tasks, renderDate) {
 
             taskOptionPinBtn.addEventListener("click", () => {
                 const pinObj = { id: item.id, propName: "isPin", value: !item.isPin };
+                clearTasks();
                 changePinTask(pinObj);
+                if (task.item) {
+                    taskOptionPinBtn.textContent = "Открепить";
+                } else if (!item.isPin) {
+                    taskOptionPinBtn.textContent = "Закрепить";
+                }
             })
 
             label.appendChild(title);
@@ -150,6 +156,7 @@ function renderTasks(tasks, renderDate) {
 
             label.addEventListener("click", () => {
                 const propObj = { id: item.id, propName: "isComplete", value: !item.isComplete };
+                clearTasks();
                 changeCompleteTask(propObj);
             });
 
@@ -166,6 +173,7 @@ function renderTasks(tasks, renderDate) {
 
             if (item.isPin) {
                 li.classList.add("tasks__item--pin");
+                taskOptionPinBtn.textContent = "Открепить";
             }
 
             li.appendChild(label);
@@ -225,6 +233,7 @@ function changePinTask(pinObj) {
 
     xhr.open("POST", url + "?jsonstring=" + body);
     xhr.send();
+    getTasks();
 }
 
 function changeCompleteTask(propObj) {
@@ -244,6 +253,7 @@ function changeCompleteTask(propObj) {
 
     xhr.open("POST", url + "?jsonstring=" + body);
     xhr.send();
+    getTasks();
 }
 
 function addTask(input) {
@@ -276,18 +286,15 @@ function renderSliderDay() {
 
     const btnNext = getHtmlElement("button", "Следущий день", null);
     const btnPrev = getHtmlElement("button", "Предыдущий день", null);
-    const btnNow = getHtmlElement("button", "Сегодня", null);
     let myDate = new Date();
-
-    //console.log(myDate);
 
     btnNext.addEventListener("click", () => {
         const year = myDate.getYear();
         const month = myDate.getMonth();
-        const day = myDate.getDate() + 1;
+        const day = myDate.getDate() + 1; 
 
         myDate = new Date(year, month, day);
-        //clearTasks();
+       
         //console.log(myDate.getDate());
     });
 
@@ -297,13 +304,13 @@ function renderSliderDay() {
         const day = myDate.getDate() - 1;
 
         myDate = new Date(year, month, day);
+
         //console.log(myDate.getDate());
     });
 
     const container = document.querySelector(".container");
     container.appendChild(btnPrev);
     container.appendChild(btnNext);
-    container.appendChild(btnNow);
 }
 
 document.addEventListener('DOMContentLoaded', getTasks);
