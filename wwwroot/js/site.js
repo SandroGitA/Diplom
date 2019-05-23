@@ -60,7 +60,7 @@ function renderAddTaskForm() {
 
 function renderTasks(tasks, renderDate) {
     const ulTasks = document.createElement("ul");
-    ulTasks.classList.add("tasks"); 
+    ulTasks.classList.add("tasks");
 
     tasks.forEach(item => {
 
@@ -91,6 +91,7 @@ function renderTasks(tasks, renderDate) {
 
             const editingForm = getHtmlElement("form", null, "editing-form");
             const editingFormInput = getHtmlElement("input", null, "editing-form-input");
+            editingFormInput.value = item.descr;
             const editignFormBtn = getHtmlElement("button", "Редактировать описание", "editing-form-input-submit");
 
             editingForm.appendChild(editingFormInput);
@@ -171,7 +172,8 @@ function renderTasks(tasks, renderDate) {
             li.appendChild(taskOption);
             ulTasks.appendChild(li);
         } else {
-            const div = getHtmlElement("div", "Нет задач", "");
+            const div = getHtmlElement("div", "Нет задач", "task-null");
+            //container.appendChild(div);
         }
     });
 
@@ -277,12 +279,15 @@ function renderSliderDay() {
     const btnNow = getHtmlElement("button", "Сегодня", null);
     let myDate = new Date();
 
+    //console.log(myDate);
+
     btnNext.addEventListener("click", () => {
         const year = myDate.getYear();
         const month = myDate.getMonth();
         const day = myDate.getDate() + 1;
 
         myDate = new Date(year, month, day);
+        //clearTasks();
         //console.log(myDate.getDate());
     });
 
