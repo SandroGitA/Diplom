@@ -19,32 +19,6 @@ function getHtmlElement(tagName, textContent, className) {
     return element;
 };
 
-const btnNext = getHtmlElement("button", "Вперед", null);
-const btnPrev = getHtmlElement("button", "Назад", null);
-let myDate = new Date();
-
-btnNext.addEventListener("click", () => {
-    const year = myDate.getYear();
-    const month = myDate.getMonth();
-    const day = myDate.getDate() + 1;
-
-    myDate = new Date(year, month, day);
-    console.log(myDate.getDate());
-});
-
-btnPrev.addEventListener("click", () => {
-    const year = myDate.getYear();
-    const month = myDate.getMonth();
-    const day = myDate.getDate() - 1;
-
-    myDate = new Date(year, month, day);
-    console.log(myDate.getDate());
-});
-
-const container = document.querySelector(".container");
-container.appendChild(btnNext);
-container.appendChild(btnPrev);
-
 function getTasks() {
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values`;
@@ -296,17 +270,35 @@ function clearTasks() {
     container.removeChild(tasksUl);
 }
 
-function renderSliderDay() {//доделать
+function renderSliderDay() {
 
-    const divSliderDay = getHtmlElement("div", null, "slider-day");
-    const divSliderDayWrap = getHtmlElement("div", null, "slider-day-wrap");
-    const sliderDayInfo = getHtmlElement("div", null, "slider-day-wrap-info");
+    const btnNext = getHtmlElement("button", "Следущий день", null);
+    const btnPrev = getHtmlElement("button", "Предыдущий день", null);
+    const btnNow = getHtmlElement("button", "Сегодня", null);
+    let myDate = new Date();
 
-    divSliderDayWrap.appendChild(sliderDayInfo);
-    divSliderDay.appendChild(divSliderDayWrap);
+    btnNext.addEventListener("click", () => {
+        const year = myDate.getYear();
+        const month = myDate.getMonth();
+        const day = myDate.getDate() + 1;
+
+        myDate = new Date(year, month, day);
+        //console.log(myDate.getDate());
+    });
+
+    btnPrev.addEventListener("click", () => {
+        const year = myDate.getYear();
+        const month = myDate.getMonth();
+        const day = myDate.getDate() - 1;
+
+        myDate = new Date(year, month, day);
+        //console.log(myDate.getDate());
+    });
 
     const container = document.querySelector(".container");
-    container.appendChild(divSliderDay);
+    container.appendChild(btnPrev);
+    container.appendChild(btnNext);
+    container.appendChild(btnNow);
 }
 
 document.addEventListener('DOMContentLoaded', getTasks);
