@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 const backendAddress = "http://37.143.15.111:800";
-const currentDate = new Date(); // DATE NOT DATA
+let currentDate = new Date(); // DATE NOT DATA
 
 function getHtmlElement(tagName, textContent, className) {
     const element = document.createElement(tagName);
@@ -180,8 +180,7 @@ function renderTasks(tasks, renderDate) {
             li.appendChild(taskOption);
             ulTasks.appendChild(li);
         } else {
-            const div = getHtmlElement("div", "Нет задач", "task-null");
-            //container.appendChild(div);
+            return;
         }
     });
 
@@ -279,7 +278,11 @@ function addTask(input) {
 function clearTasks() {
     const tasksUl = document.querySelector(".tasks");
     const container = document.querySelector(".container");
-    container.removeChild(tasksUl);
+    if (tasksUl == null) {
+        return;
+    } else {
+        container.removeChild(tasksUl);
+    }
 }
 
 function renderSliderDay() {
@@ -289,23 +292,27 @@ function renderSliderDay() {
     let myDate = new Date();
 
     btnNext.addEventListener("click", () => {
-        const year = myDate.getYear();
+        const year = myDate.getYear() + 1900;
         const month = myDate.getMonth();
         const day = myDate.getDate() + 1; 
 
         myDate = new Date(year, month, day);
-       
-        //console.log(myDate.getDate());
+        currentDate = myDate;
+
+        clearTasks();
+        getTasks();    
     });
 
     btnPrev.addEventListener("click", () => {
-        const year = myDate.getYear();
+        const year = myDate.getYear() + 1900;
         const month = myDate.getMonth();
         const day = myDate.getDate() - 1;
 
         myDate = new Date(year, month, day);
+        currentDate = myDate;
 
-        //console.log(myDate.getDate());
+        clearTasks();
+        getTasks();
     });
 
     const container = document.querySelector(".container");
