@@ -40,6 +40,12 @@ function renderAddTaskForm() {
     const elementFormAdd = getHtmlElement("form", null, "add-task");
     const inputText = getHtmlElement("input", null, "add-task__input");
     const submitButton = getHtmlElement("button", "Добавить задачу", "add-task__submit");
+
+    submitButton.classList.add("btn");
+    submitButton.classList.add("btn-primary");
+
+    inputText.classList.add("form-control");
+
     elementFormAdd.appendChild(inputText);
     elementFormAdd.appendChild(submitButton);
 
@@ -61,6 +67,7 @@ function renderAddTaskForm() {
 function renderTasks(tasks, renderDate) {
     const ulTasks = document.createElement("ul");
     ulTasks.classList.add("tasks");
+    ulTasks.classList.add("list-group");
 
     tasks.forEach(item => {
 
@@ -79,32 +86,44 @@ function renderTasks(tasks, renderDate) {
 
             const label = document.createElement("label");
             const li = getHtmlElement("li", null, "tasks__item");
+            li.classList.add("list-group-item");
             const title = getHtmlElement("p", item.title, "tasks__item-title");
 
             const taskOption = getHtmlElement("div", null, "task-option");
             const taskOptionButton = getHtmlElement("button", "Меню задачи", "task-option-button");
             const taskOptionListUl = getHtmlElement("ul", null, "task-option-list-ul");
+            taskOptionListUl.classList.add("list-group");
 
-            const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", null);
-            const taskOptionEditBtn = getHtmlElement("button", "Редактировать", null);
-            const taskOptionPinBtn = getHtmlElement("button", "Закрепить", null);
+            const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", "btn");
+            taskOptionDeleteBtn.classList.add("btn-success");
+            //taskOptionDeleteBtn.classList.add("btn-block");
+            const taskOptionEditBtn = getHtmlElement("button", "Редактировать", "btn");
+            taskOptionEditBtn.classList.add("btn-warning");
+            const taskOptionPinBtn = getHtmlElement("button", "Закрепить", "btn");
+            taskOptionPinBtn.classList.add("btn-info");
 
             const editingForm = getHtmlElement("form", null, "editing-form");
             const editingFormInput = getHtmlElement("input", null, "editing-form-input");
+            editingFormInput.classList.add("form-control");
             editingFormInput.value = item.descr;
             const editignFormBtn = getHtmlElement("button", "Редактировать описание", "editing-form-input-submit");
+            editignFormBtn.classList.add("btn");
+            editignFormBtn.classList.add("btn-primary");
 
             editingForm.appendChild(editingFormInput);
             editingForm.appendChild(editignFormBtn);
 
             const taskOptionListLiDelete = getHtmlElement("li", null, "task-option-list-li");
             taskOptionListLiDelete.appendChild(taskOptionDeleteBtn);
+            taskOptionListLiDelete.classList.add("list-group-item");
 
             const taskOptionListLiEdit = getHtmlElement("li", null, "task-option-list-li");
             taskOptionListLiEdit.appendChild(taskOptionEditBtn);
+            taskOptionListLiEdit.classList.add("list-group-item");
 
             const taskOptionListLiPin = getHtmlElement("li", null, "task-option-list-li");
             taskOptionListLiPin.appendChild(taskOptionPinBtn);
+            taskOptionListLiPin.classList.add("list-group-item");
 
             taskOptionListUl.appendChild(taskOptionListLiDelete);
             taskOptionListUl.appendChild(taskOptionListLiEdit);
@@ -127,7 +146,7 @@ function renderTasks(tasks, renderDate) {
                 taskOptionListUl.classList.remove("task-option--show");
             })
 
-            taskOption.appendChild(taskOptionButton);
+            //taskOption.appendChild(taskOptionButton);
             taskOption.appendChild(taskOptionListUl);
 
             taskOptionDeleteBtn.addEventListener("click", () => {
@@ -287,8 +306,12 @@ function clearTasks() {
 
 function renderSliderDay() {
 
-    const btnNext = getHtmlElement("button", "Следущий день", null);
-    const btnPrev = getHtmlElement("button", "Предыдущий день", null);
+    const btnNext = getHtmlElement("button", "Следущий день", "btn");
+    const btnPrev = getHtmlElement("button", "Предыдущий день", "btn");
+    const slider = getHtmlElement("div", null, "slider");
+    btnNext.classList.add("col-sm-6");
+    btnPrev.classList.add("col-sm-6");
+    slider.classList.add("row");
     let myDate = new Date();
 
     btnNext.addEventListener("click", () => {
@@ -315,9 +338,10 @@ function renderSliderDay() {
         getTasks();
     });
 
+    slider.appendChild(btnPrev);
+    slider.appendChild(btnNext);
     const container = document.querySelector(".container");
-    container.appendChild(btnPrev);
-    container.appendChild(btnNext);
+    container.appendChild(slider);
 }
 
 document.addEventListener('DOMContentLoaded', getTasks);
