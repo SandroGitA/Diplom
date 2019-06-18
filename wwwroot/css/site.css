@@ -32,6 +32,11 @@
     text-decoration: line-through;
 }
 
+.tasks__item--done label {
+    color: #969393;
+    text-decoration: line-through;
+}
+
 .tasks__item-title {
     margin: 0;
     font-size: 16px;
@@ -43,8 +48,12 @@
     color: #969393;
 }
 
-.tasks__item--pin{
-    font-size: 30px;
+.tasks__item--pin {
+    border-color: green;
+}
+
+.tasks__item--pin .list-group-item {
+    border-color: green;
 }
 
 .task-option-list-ul {
