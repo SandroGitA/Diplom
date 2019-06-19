@@ -95,14 +95,12 @@ function renderTasks(tasks, renderDate) {
             const title = getHtmlElement("p", item.title, "tasks__item-title");
 
             const taskOption = getHtmlElement("div", null, "task-option");
-            //const taskOptionButton = getHtmlElement("button", "Меню задачи", "task-option-button");
             const taskOptionListUl = getHtmlElement("ul", null, "task-option-list-ul");
             taskOptionListUl.classList.add("list-group");
 
             const taskOptionDeleteBtn = getHtmlElement("button", "Удалить", "btn");
             taskOptionDeleteBtn.classList.add("btn-success");
             taskOptionDeleteBtn.classList.add("btn-block");
-            //taskOptionDeleteBtn.classList.add("btn-block");
             const taskOptionEditBtn = getHtmlElement("button", "Редактировать", "btn");
             taskOptionEditBtn.classList.add("btn-warning");
             taskOptionEditBtn.classList.add("btn-block");
@@ -144,17 +142,7 @@ function renderTasks(tasks, renderDate) {
                 editTaskDescr(editDescr);
                 editingFormInput.value = "";
             })
-
-            /*taskOptionButton.addEventListener("mouseenter", () => {
-                taskOptionListUl.classList.add("task-option--show");
-                taskOptionListUl.classList.remove("task-option--unshow");
-            })
-            taskOptionButton.addEventListener("mouseleave", () => {
-                taskOptionListUl.classList.toggle("task-option--unshow");
-                taskOptionListUl.classList.remove("task-option--show");
-            })*/
-
-            //taskOption.appendChild(taskOptionButton);
+          
             taskOption.appendChild(taskOptionListUl);
 
             taskOptionDeleteBtn.addEventListener("click", () => {
@@ -246,17 +234,7 @@ function deleteTask(deleteObj) {
 function changePinTask(pinObj) {
     const xhr = new XMLHttpRequest();
     const url = `${backendAddress}/values/edit`;
-    const body = JSON.stringify(pinObj);
-
-    //xhr.addEventListener("load", () => {
-    //    if (xhr.status >= 200 & xhr.status <= 210) {
-    //        const li = document.querySelector(`#task-item-${pinObj.id}`);
-    //        li.classList.toggle("tasks__item--pin");
-    //    } else {
-    //        console.error("error");
-    //    }
-    //})
-
+    const body = JSON.stringify(pinObj);   
     xhr.open("POST", url + "?jsonstring=" + body);
     xhr.send();
     getTasks();
@@ -288,7 +266,6 @@ function addTask(input) {
 
     const newTask = {
         id: new Date().getTime(),
-        //dateBind: new Date(),
         dateBind: currentDate,
         dateCreate: new Date(),
         title: input,
@@ -318,9 +295,6 @@ function renderSliderDay() {
     const btnNext = getHtmlElement("button", "Следущий день", "btn");
     const btnPrev = getHtmlElement("button", "Предыдущий день", "btn");
     const slider = getHtmlElement("div", null, "slider");
-    //btnNext.classList.add("col-sm-6");
-    //btnPrev.classList.add("col-sm-6");
-    //slider.classList.add("row");
     let myDate = new Date();
 
     btnNext.addEventListener("click", () => {
